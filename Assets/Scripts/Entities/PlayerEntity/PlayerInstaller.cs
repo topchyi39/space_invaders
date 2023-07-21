@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using GameComponents;
+using UnityEngine;
 using Zenject;
 
 namespace Entities.PlayerEntity
@@ -11,12 +12,7 @@ namespace Entities.PlayerEntity
         
         public override void InstallBindings()
         {
-            var playerGameObject = Container.InstantiatePrefab(playerPrefab, 
-                                                              playerSpawnPoint.position, 
-                                                              gameObjectsParent.rotation,
-                                                              gameObjectsParent);
-            
-            
+            Container.BindFactory<Game, Player, Player.Factory>().FromComponentInNewPrefab(playerPrefab);
         }
     }
 }

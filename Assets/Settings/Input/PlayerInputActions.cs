@@ -29,32 +29,39 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             ""actions"": [
                 {
                     ""name"": ""Moving"",
-                    ""type"": ""Value"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""fec31733-ad8f-4b21-b042-3424b344f78d"",
                     ""expectedControlType"": ""Axis"",
                     ""processors"": """",
                     ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Fire"",
+                    ""type"": ""Button"",
+                    ""id"": ""7fc95e4c-bbc7-44d1-a3dc-765fbcade30d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(pressPoint=0.2,behavior=1)"",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MovingTouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""4aefe0e0-6cb9-44c0-9e99-d83b38c39ded"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Hold(duration=0.2,pressPoint=0.2)"",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""46b3c010-f2a6-4b0c-b71f-a842c09f67a7"",
-                    ""path"": ""<Touchscreen>/delta/x"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Moving"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": ""1D Axis"",
                     ""id"": ""689c4e77-5ca1-40e9-825d-a6622f850180"",
                     ""path"": ""1DAxis"",
                     ""interactions"": """",
-                    ""processors"": """",
+                    ""processors"": ""Invert"",
                     ""groups"": """",
                     ""action"": ""Moving"",
                     ""isComposite"": true,
@@ -81,6 +88,61 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Moving"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7e7948ff-2064-4ea3-8c2c-0d509a09152f"",
+                    ""path"": ""<Touchscreen>/position/x"",
+                    ""interactions"": ""Hold"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Moving"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdc7e3e4-2097-4187-946c-5c53e2d09794"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6c7238a9-9892-4929-b7e4-c651d9a8fe90"",
+                    ""path"": ""<Touchscreen>/touch0/tap"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1dd11663-71a7-4d00-ad60-8cc5f8265a8e"",
+                    ""path"": ""<Touchscreen>/touch1/tap"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""928bf138-7477-452d-9bc3-66185ecf9dbe"",
+                    ""path"": ""<Touchscreen>/Press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MovingTouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -90,6 +152,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Moving = m_Player.FindAction("Moving", throwIfNotFound: true);
+        m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
+        m_Player_MovingTouch = m_Player.FindAction("MovingTouch", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -152,11 +216,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Moving;
+    private readonly InputAction m_Player_Fire;
+    private readonly InputAction m_Player_MovingTouch;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
         public PlayerActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Moving => m_Wrapper.m_Player_Moving;
+        public InputAction @Fire => m_Wrapper.m_Player_Fire;
+        public InputAction @MovingTouch => m_Wrapper.m_Player_MovingTouch;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -169,6 +237,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Moving.started += instance.OnMoving;
             @Moving.performed += instance.OnMoving;
             @Moving.canceled += instance.OnMoving;
+            @Fire.started += instance.OnFire;
+            @Fire.performed += instance.OnFire;
+            @Fire.canceled += instance.OnFire;
+            @MovingTouch.started += instance.OnMovingTouch;
+            @MovingTouch.performed += instance.OnMovingTouch;
+            @MovingTouch.canceled += instance.OnMovingTouch;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -176,6 +250,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Moving.started -= instance.OnMoving;
             @Moving.performed -= instance.OnMoving;
             @Moving.canceled -= instance.OnMoving;
+            @Fire.started -= instance.OnFire;
+            @Fire.performed -= instance.OnFire;
+            @Fire.canceled -= instance.OnFire;
+            @MovingTouch.started -= instance.OnMovingTouch;
+            @MovingTouch.performed -= instance.OnMovingTouch;
+            @MovingTouch.canceled -= instance.OnMovingTouch;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -196,5 +276,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnMoving(InputAction.CallbackContext context);
+        void OnFire(InputAction.CallbackContext context);
+        void OnMovingTouch(InputAction.CallbackContext context);
     }
 }

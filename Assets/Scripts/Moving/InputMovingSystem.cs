@@ -1,4 +1,6 @@
-﻿using Input;
+﻿using CameraTools;
+using Entities;
+using Input;
 using UnityEngine;
 using Zenject;
 
@@ -8,37 +10,49 @@ namespace Moving
     {
         [SerializeField] private PlayerMovingData movingData;
         [SerializeField] private PlayerRotationData rotationData;
-        
+
+        private CameraBoundary _cameraBoundary;
+        private EntityBoundary _entityBoundary;
         private IPlayerInput _playerInput;
         private Transform _transform;
         private Vector3 _rightDirection;
         
-        private bool _canMove;
+        private bool _enabled;
+
+        public Vector3 Position => _transform.position;
         
         [Inject]
-        private void Construct(IPlayerInput playerInput)
+        private void Construct(IPlayerInput playerInput, CameraBoundary cameraBoundary)
         {
             _playerInput = playerInput;
+            _cameraBoundary = cameraBoundary;
         }
 
         private void Awake()
         {
             _transform = transform;
-            _rightDirection = _transform.right;
+            _rightDirection = -_transform.right;
+        }
+
+        public void SetEntityBoundary(EntityBoundary boundary)
+        {
+            _entityBoundary = boundary;
         }
 
         public void Enable()
         {
-            _canMove = true;
+            _enabled = true;
         }
 
         public void Disable()
         {
-            _canMove = false;
+            _enabled = false;
         }
 
         private void FixedUpdate()
         {
+            if (!_enabled) return;
+            
             Move(out var newPosition);
             Rotate(newPosition);
         }
@@ -63,7 +77,6 @@ namespace Moving
             if (IsHaveInput() && !IsAtTheBorder(position))
             {
                 rotation = GetRotation();
-                
             }
             
             _transform.localRotation = Quaternion.Slerp(_transform.localRotation, rotation, Time.deltaTime *  rotationData.RotationSpeed);
@@ -76,13 +89,14 @@ namespace Moving
 
         private Quaternion GetRotation()
         {
-            return Quaternion.AngleAxis(rotationData.AngleRotation * Mathf.Sign(_playerInput.HorizontalAxis),
+            var angle = rotationData.AngleRotation * Mathf.Sign(_playerInput.HorizontalAxis);
+            return Quaternion.AngleAxis(angle,
                 Vector3.up);
         }
 
         private bool IsAtTheBorder(Vector3 newPosition)
         {
-            return movingData.BorderValue - Mathf.Abs(newPosition.x) < movingData.BorderTolerance;
+            return _cameraBoundary.CheckPointInHorizontalBoundary(newPosition, _entityBoundary.HalfExtends.x);
         }
 
         private bool IsHaveInput()

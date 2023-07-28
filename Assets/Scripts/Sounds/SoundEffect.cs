@@ -36,7 +36,7 @@ namespace Sounds
         public bool IsPlaying => audioSource.isPlaying;
 
         public event Action Release;
-        
+
         public void Play(AudioClip clip, SoundEffectParams effectParams)
         {
             SetParametersToAudioSource(effectParams);

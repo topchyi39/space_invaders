@@ -68,22 +68,22 @@ namespace Entities.EnemyEntity
             _enemyConfigureAction += action;
         }
 
-        public IEntity GetRandomEntity(IEntity previousEntity)
+        public IEntity GetRandomAliveEntity(IEntity previousEntity)
         {
-            
-            var randomIndex = Random.Range(0, _enemies.Count);
+            var aliveEnemies = _enemies.Where(entity => entity.IsAlive).ToArray();
+            var randomIndex = Random.Range(0, aliveEnemies.Length);
             IEntity randomEntity;
             
             if (previousEntity == null)
             {
-                randomEntity =  _enemies[randomIndex];
+                randomEntity =  aliveEnemies[randomIndex];
             }
             
             else
             {
                 do
                 {
-                    randomEntity = _enemies[randomIndex];
+                    randomEntity = aliveEnemies[randomIndex];
                 } 
                 while (randomEntity != previousEntity);
             }
@@ -91,6 +91,15 @@ namespace Entities.EnemyEntity
             return randomEntity;
         }
 
+        [ContextMenu("Kill All")]
+        private void KillAll()
+        {
+            foreach (var enemy in _enemies)
+            {
+                enemy.Hit(null);
+            }
+        }
+        
         private void OnEnemyDied()
         {
             _diedEnemies++;

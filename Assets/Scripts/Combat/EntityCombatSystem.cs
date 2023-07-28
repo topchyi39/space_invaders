@@ -1,5 +1,7 @@
 ﻿using System;
 using Combat.Projectiles;
+using Entities;
+using GameComponents;
 using ObjectPolling;
 using OriginContainer;
 using UnityEngine;
@@ -22,8 +24,9 @@ namespace Combat
         public bool Enabled => _enabled;
 
         [Inject]
-        private void BaseConstruct(ProjectilePool projectilePool, IOrigin origin)
+        private void BaseConstruct(ProjectilePool projectilePool, IOrigin origin, Game game)
         {
+            game.AddListener(this);
             _projectilePool = projectilePool;
             Origin = origin;
         }
@@ -37,6 +40,8 @@ namespace Combat
         {
             _enabled = false;
         }
+
+        public virtual void SetEntityBoundary(EntityBoundary entityBoundary) { }
 
         private void Update()
         {

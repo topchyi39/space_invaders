@@ -216,6 +216,7 @@ MonoBehaviour:
   boundary: {fileID: 1502224077516838352}
   defaultMeshFilter: {fileID: 4244768959645488867}
   secondMeshFilter: {fileID: 7058998393160623750}
+  meshRenderer: {fileID: 7021599908823966518}
 --- !u!114 &1502224077516838352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -396,6 +397,7 @@ MonoBehaviour:
   boundary: {fileID: 1386973652627176187}
   defaultMeshFilter: {fileID: 5621548031354562022}
   secondMeshFilter: {fileID: 1521419958147159427}
+  meshRenderer: {fileID: 1556566710922203187}
 --- !u!114 &1386973652627176187
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -785,6 +787,7 @@ MonoBehaviour:
   boundary: {fileID: 1015309689748428051}
   defaultMeshFilter: {fileID: 9155164047730288638}
   secondMeshFilter: {fileID: 2599498872246392731}
+  meshRenderer: {fileID: 2635841885217493547}
 --- !u!114 &1015309689748428051
 MonoBehaviour:
   m_ObjectHideFlags: 0

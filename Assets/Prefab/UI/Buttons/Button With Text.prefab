@@ -68,8 +68,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: New Text
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 1b44360273b218c44a96eac9fb89ecf1, type: 2}
+  m_sharedMaterial: {fileID: -1817504017540331324, guid: 1b44360273b218c44a96eac9fb89ecf1,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -93,13 +94,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 44
+  m_fontSizeBase: 44
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -145,7 +146,7 @@ PrefabInstance:
     - target: {fileID: 3190990875860009448, guid: b83ad8d58d324e04ab35158ec916ea72,
         type: 3}
       propertyPath: m_Name
-      value: Button
+      value: Button With Text
       objectReference: {fileID: 0}
     - target: {fileID: 7360462294496034510, guid: b83ad8d58d324e04ab35158ec916ea72,
         type: 3}

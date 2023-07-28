@@ -1,7 +1,9 @@
 ﻿using System;
 using Entities;
 using Entities.EnemyEntity;
+using ObjectPolling;
 using UnityEngine;
+using VisualEffects;
 
 namespace Visual
 {
@@ -10,10 +12,13 @@ namespace Visual
         [SerializeField] private EntityBoundary boundary;
         [SerializeField] private MeshFilter defaultMeshFilter;
         [SerializeField] private MeshFilter secondMeshFilter;
-
+        [SerializeField] private MeshRenderer meshRenderer;
+        
         private Mesh _defaultMesh;
         private Mesh _secondMesh;
         private bool _toggled;
+        private Material _material;
+        private Color _mainColor = Color.white;
 
         public EntityBoundary Boundary => boundary;
         
@@ -40,6 +45,19 @@ namespace Visual
         {
             _toggled = !_toggled;
             defaultMeshFilter.sharedMesh = _toggled ? _secondMesh : _defaultMesh;
+        }
+
+        public void SetGold(bool state)
+        {
+            _material ??= meshRenderer.material;
+            _mainColor = state ? Color.yellow : Color.white;
+            _material.color = _mainColor;
+        }
+
+        public void SpawnDestroyEffect(VisualEffectPool visualEffectPool)
+        {
+            visualEffectPool.SpawnEffect<DestroyingEffect>(transform.position, transform.rotation, _mainColor);
+            
         }
     }
 }

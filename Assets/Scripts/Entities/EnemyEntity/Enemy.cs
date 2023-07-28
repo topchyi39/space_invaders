@@ -69,12 +69,18 @@ namespace Entities.EnemyEntity
             return true;
         }
 
+        public void SetGold(bool state)
+        {
+            _currentVisual.SetGold(state);
+        }
+
         private void Die()
         {
             IsAlive = false;
             MovingSystem.Disable();
             gameObject.SetActive(false);
-            _visualEffectPool.SpawnEffect<DestroyingEffect>(transform.position, transform.rotation);
+            _currentVisual.SpawnDestroyEffect(_visualEffectPool);
+            
             OnDied?.Invoke();
             OnDied = null;
         }

@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:keep="@string/gcm_defaultSenderId,@string/google_storage_bucket,@string/project_id,@string/google_api_key,@string/google_crash_reporting_api_key,@string/google_app_id,@string/default_web_client_id">
+  <string name="gcm_defaultSenderId" translatable="false">158739824045</string>
+  <string name="google_storage_bucket" translatable="false">retro-space-raiders-13430048.appspot.com</string>
+  <string name="project_id" translatable="false">retro-space-raiders-13430048</string>
+  <string name="google_api_key" translatable="false">AIzaSyCseAURTu_8nLMD2jOiwKs523YsPOcoPKY</string>
+  <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCseAURTu_8nLMD2jOiwKs523YsPOcoPKY</string>
+  <string name="google_app_id" translatable="false">1:158739824045:android:083b3dddbe00f761537524</string>
+  <string name="default_web_client_id" translatable="false">158739824045-12m572bvmp8ie177kg58j2ftqpts8hhj.apps.googleusercontent.com</string>
+</resources>

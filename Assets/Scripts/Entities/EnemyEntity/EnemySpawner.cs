@@ -106,6 +106,7 @@ namespace Entities.EnemyEntity
 
         public void OnGameStarted()
         {
+            Debug.Log("EnemySpawnerGameStarted");
             SpawnEnemies();
         }
 

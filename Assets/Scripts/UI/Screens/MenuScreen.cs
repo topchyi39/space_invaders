@@ -26,17 +26,18 @@ namespace UI.Screens
         private void Play()
         {
             ViewModel.Play();
+            Hide();
         }
 
         protected override void ShowCallback()
         {
             _soundManager.PlaySound<BackgroundMusic>(new BackgroundMusicData { Type = BackgroundMusicType.Menu });
+            ViewModel.SetParallaxToIdle();
         }
 
         protected override void HideCallback()
         {
-            
-            _soundManager?.PlaySound<BackgroundMusic>(new BackgroundMusicData { Type = BackgroundMusicType.Game });
+            // _soundManager?.PlaySound<BackgroundMusic>(new BackgroundMusicData { Type = BackgroundMusicType.Game });
         }
     }
 }

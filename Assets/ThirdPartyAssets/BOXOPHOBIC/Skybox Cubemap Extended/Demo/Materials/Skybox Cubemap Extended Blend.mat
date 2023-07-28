@@ -112,8 +112,9 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _Rotation: 14
-    - _RotationSpeed: 0.1
+    - _Rotation: 198
+    - _RotationSpeed: 0
+    - _RotationX: 0
     - _Rotationn: 1
     - _SkyboxExtended: 1
     - _SmoothnessTextureChannel: 0

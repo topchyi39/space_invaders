@@ -14,7 +14,9 @@ Shader "Skybox/Cubemap Blend"
 		_CubemapPosition("Cubemap Position", Float) = 0
 		[StyledCategory(Rotation Settings)]_Rotationn("[ Rotationn ]", Float) = 1
 		[Toggle(_ENABLEROTATION_ON)] _EnableRotation("Enable Rotation", Float) = 0
-		[IntRange][Space(10)]_Rotation("Rotation", Range( 0 , 360)) = 0
+		[IntRange][Space(10)]
+		_Rotation("Rotation", Range( 0 , 360)) = 0
+		_RotationX("RotationX", Range( 0 , 360)) = 0
 		_RotationSpeed("Rotation Speed", Float) = 1
 		[StyledCategory(Fog Settings)]_Fogg("[ Fogg ]", Float) = 1
 		[Toggle(_ENABLEFOG_ON)] _EnableFog("Enable Fog", Float) = 0
@@ -100,6 +102,7 @@ Shader "Skybox/Cubemap Blend"
 			uniform samplerCUBE _Tex;
 			uniform float _CubemapPosition;
 			uniform half _Rotation;
+			uniform half _RotationX;
 			uniform half _RotationSpeed;
 			uniform samplerCUBE _Tex_Blend;
 			uniform half _CubemapTransition;
@@ -141,7 +144,7 @@ Shader "Skybox/Cubemap Blend"
 				float3 VertexPosOtherAxis82_g1 = appendResult81_g1;
 				half Angle44_g1 = ( 1.0 - radians( ( _Rotation + ( _Time.y * _RotationSpeed ) ) ) );
 				#ifdef _ENABLEROTATION_ON
-				float3 staticSwitch1164 = ( ( VertexPosRotationAxis50_g1 + ( VertexPosOtherAxis82_g1 * cos( Angle44_g1 ) ) + ( cross( float3(0,1,0) , VertexPosOtherAxis82_g1 ) * sin( Angle44_g1 ) ) ) + appendResult1208 );
+				float3 staticSwitch1164 = ( ( VertexPosRotationAxis50_g1 + ( VertexPosOtherAxis82_g1 * cos( Angle44_g1 ) ) + ( cross( float3(0,0,0) , VertexPosOtherAxis82_g1 ) * sin( Angle44_g1 ) ) ) + appendResult1208 );
 				#else
 				float3 staticSwitch1164 = ( appendResult1220 + appendResult1208 );
 				#endif

@@ -7,14 +7,51 @@ namespace CameraTools
     {
         [SerializeField] private Camera camera;
 
-        public bool CheckPointInHorizontalBoundary(Vector3 point, float pointSize)
+        public bool CheckPointInBoundary(Vector3 point, Vector3 halfExtends, bool debug = false)
         {
-            var screenPoint = camera.WorldToScreenPoint(point);
             
-            var leftCorner = camera.ScreenToWorldPoint(new Vector3(camera.pixelWidth, screenPoint.y, screenPoint.z)).x;
-            var rightCorner = camera.ScreenToWorldPoint(new Vector3(0, screenPoint.y, screenPoint.z)).x;
+            var left = point;
+            left.x -= halfExtends.x;
+            left.y -= halfExtends.y;
+            
+            var right = point;
+            right.x += halfExtends.x;
+            right.y += halfExtends.y;
+            
+            var result = CheckViewportPositions(left, right);
+            
+            
+            if (debug) Debug.Log(result);
+            
+            return result;
+        }
+        
+        public bool CheckPointInBoundary(Vector3 point, float halfExtends, bool debug = false)
+        {
+            
+            var left = point;
+            left.x -= halfExtends;
+            left.y -= halfExtends;
+            
+            var right = point;
+            right.x += halfExtends;
+            right.y += halfExtends;
+            
+            var result = CheckViewportPositions(right, left);
 
-            return !(point.x - pointSize > rightCorner && point.x  + pointSize < leftCorner);
+            if (debug) Debug.Log(result);
+            
+            return result;
+        }
+
+        private bool CheckViewportPositions(Vector3 left, Vector3 right)
+        {
+            var leftViewPortPoint = camera.WorldToViewportPoint(left);
+            var rightViewPortPoint = camera.WorldToViewportPoint(right);
+
+            var result = leftViewPortPoint is { x: > 0, y: > 0 } &&
+                         rightViewPortPoint is { x: < 1, y: < 1 };
+            return result;
         }
 
         public bool CheckPointInVerticalBoundary(Vector3 point, float pointSize)

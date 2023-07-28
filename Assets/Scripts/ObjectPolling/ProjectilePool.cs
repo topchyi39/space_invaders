@@ -1,5 +1,6 @@
 ﻿using CameraTools;
 using Combat.Projectiles;
+using GameComponents;
 using Sounds;
 using UnityEngine;
 using Zenject;
@@ -8,7 +9,7 @@ namespace ObjectPolling
 {
     
     
-    public class ProjectilePool : AbstractObjectPool<Projectile>
+    public class ProjectilePool : AbstractObjectPool<Projectile>, IGameDisposable
     {
         [SerializeField] private ProjectileMoving projectileMoving;
 
@@ -17,7 +18,7 @@ namespace ObjectPolling
         private Projectile.Factory _projectileFactory;
         
         [Inject]
-        private void Construct(SoundManager soundManager, VisualEffectPool visualEffectPool, Projectile.Factory projectileFactory)
+        private void Construct(SoundManager soundManager, VisualEffectPool visualEffectPool, Projectile.Factory projectileFactory, Game game)
         {
             _soundManager = soundManager;
             _projectileFactory = projectileFactory;
@@ -34,6 +35,11 @@ namespace ObjectPolling
             projectile.Release += () => Pool.Release(projectile);
 
             return projectile;
+        }
+        
+        public void OnGameDispose()
+        {
+            Pool.Clear();
         }
 
         protected override void OnReleaseObjectCallBack(Projectile poolObject) { }

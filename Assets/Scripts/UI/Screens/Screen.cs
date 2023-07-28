@@ -15,10 +15,13 @@ namespace UI.Screens
     {        
         [SerializeField] private bool hideOnAwake = true;
 
+        protected UIManager _uiManager;
+        
         [Inject]
         private void BaseConstruct(UIManager uiManager)
         {
-            uiManager.AddScreen(this);
+            _uiManager = uiManager;
+            _uiManager.AddScreen(this);
             if (hideOnAwake) Hide();
         }
         
@@ -59,12 +62,14 @@ namespace UI.Screens
             canvas.enabled = true;
             graphicRaycaster.enabled = true;
             canvasGroup.alpha = 1;
+            canvasGroup.blocksRaycasts = true;
             ShowCallback();
         }
 
         public override void Hide()
         {
             canvasGroup.alpha = 0;
+            canvasGroup.blocksRaycasts = false;
             canvas.enabled = false;
             graphicRaycaster.enabled = false;
             HideCallback();

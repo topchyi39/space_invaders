@@ -5,6 +5,18 @@ namespace ObjectPolling
 {
     public class VisualEffectPool : AbstractObjectPools<BasePoolEffect>
     {
+        public void SpawnEffect<T1>(Vector3 position, Quaternion rotation, Color color) where T1 : BasePoolEffect
+        {
+            var type = typeof(T1);
+            if (!_pools.ContainsKey(type)) return;
+            
+            var effect = _pools[type].Get() as T1;
+            effect.transform.position = position;
+            effect.transform.rotation = rotation;
+            effect.gameObject.SetActive(true);
+            effect.Play(color);
+        }
+        
         public void SpawnEffect<T1>(Vector3 position, Quaternion rotation) where T1 : BasePoolEffect
         {
             var type = typeof(T1);

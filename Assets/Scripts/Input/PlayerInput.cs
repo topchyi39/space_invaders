@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Gyroscope = UnityEngine.InputSystem.Gyroscope;
 
 namespace Input
 {
@@ -8,6 +9,7 @@ namespace Input
     {
         float HorizontalAxis { get; }
         bool Fire { get; }
+        Vector3 Acceleration { get; }
     }
     
     public class PlayerInput : MonoBehaviour, IPlayerInput
@@ -15,12 +17,13 @@ namespace Input
         private PlayerInputActions _playerInputActions;
         private float _startX;
         private float _halfOfScreenWidth;
+        private float _halfOfScreenHeight;
         private bool _canUpdateAxis;
         private bool _frameIsSkipped;
 
         public float HorizontalAxis { get; private set; }
         public bool Fire { get; private set; }
-
+        public Vector3 Acceleration { get; private set; }
         private void OnEnable()
         {
             _playerInputActions ??= new PlayerInputActions();
@@ -32,6 +35,17 @@ namespace Input
         private void Start()
         {
             _halfOfScreenWidth = Screen.width / 2f;
+            _halfOfScreenHeight = Screen.height / 2f;
+            
+#if !UNITY_EDITOR
+            InputSystem.EnableDevice(Gyroscope.current);
+            InputSystem.EnableDevice(Accelerometer.current);
+            Acceleration = Accelerometer.current.acceleration.ReadValue();
+
+            InputSystem.EnableDevice(AttitudeSensor.current);
+            InputSystem.EnableDevice(GravitySensor.current);
+#endif      
+            
         }
 
         private void OnDisable()
@@ -44,6 +58,21 @@ namespace Input
         {
             ReadHorizontalAxis();
             ReadFire();
+            ReadSensors();
+        }
+
+        private void ReadSensors()
+        {
+            
+#if !UNITY_EDITOR
+            Acceleration = Accelerometer.current.acceleration.ReadValue();
+#else
+            var mousePosition = _playerInputActions.Player.MousePosition.ReadValue<Vector2>();
+            var x = Mathf.InverseLerp(-_halfOfScreenWidth ,_halfOfScreenWidth, mousePosition.x - _halfOfScreenWidth);
+            var y = Mathf.InverseLerp(-_halfOfScreenHeight ,_halfOfScreenHeight, mousePosition.y - _halfOfScreenHeight);
+            var newAcceleration = new Vector3(x, y, 0);
+            Acceleration = newAcceleration;
+#endif
         }
 
         private void ReadFire()
@@ -72,7 +101,7 @@ namespace Input
 #endif
             
             
-            HorizontalAxis = axisValue;
+            HorizontalAxis = -axisValue;
         }
 
         private void SubscribeOnEvents()

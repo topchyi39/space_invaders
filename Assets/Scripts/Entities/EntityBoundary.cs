@@ -8,6 +8,13 @@ namespace Entities
 
         public Vector3 Bound => bound;
         public Vector3 HalfExtends => bound / 2f;
+
+        public void SetBound(Vector3 newBound)
+        {
+            if (newBound == Vector3.zero) return;
+
+            bound = newBound;
+        }
         
         private void OnDrawGizmosSelected()
         {

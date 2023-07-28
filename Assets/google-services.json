@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "158739824045",
+    "project_id": "retro-space-raiders-13430048",
+    "storage_bucket": "retro-space-raiders-13430048.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158739824045:android:083b3dddbe00f761537524",
+        "android_client_info": {
+          "package_name": "com.gentix.RetroSpaceRaiders"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "158739824045-12m572bvmp8ie177kg58j2ftqpts8hhj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCseAURTu_8nLMD2jOiwKs523YsPOcoPKY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "158739824045-12m572bvmp8ie177kg58j2ftqpts8hhj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

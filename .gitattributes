@@ -77,3 +77,6 @@ Chromium[[:space:]]Embedded[[:space:]]Framework filter=lfs diff=lfs merge=lfs -t
 *.fbx[[:space:]]lfs-size-threshold=30M filter=lfs diff=lfs merge=lfs -text
 *.dll[[:space:]]lfs-size-threshold=30M filter=lfs diff=lfs merge=lfs -text
 *.app[[:space:]]lfs-size-threshold=30M filter=lfs diff=lfs merge=lfs -text
+*.bundle filter=lfs diff=lfs merge=lfs -text
+FirebaseCppApp-11_1_0.bundle filter=lfs diff=lfs merge=lfs -text
+Assets/Firebase/Plugins/x86_64/FirebaseCppApp-11_1_0.bundle filter=lfs diff=lfs merge=lfs -text

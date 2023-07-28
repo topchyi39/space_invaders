@@ -7,17 +7,22 @@ using Zenject;
 
 namespace GameComponents.Score
 {
-    public class ScoreHandler : MonoBehaviour
+    public class ScoreHandler : MonoBehaviour, IGameDisposable, IGameEndListener
     {
         [SerializeField] private int scorePointsPerKill;
 
         private int _currentScore;
         private ScoreViewModel _scoreViewModel;
         private UIManager _uiManager;
+        private BestScore _bestScore;
+
+        public int CurrentScore => _currentScore;
+        public bool IsBest => _bestScore.CheckForBest(_currentScore);
         
         [Inject]
-        private void Construct(UIManager uiManager, EnemiesContainer enemiesContainer)
+        private void Construct(UIManager uiManager, EnemiesContainer enemiesContainer, Game game)
         {
+            game.AddListener(this);
             _uiManager = uiManager;
             enemiesContainer.AddEnemySpawnedCallback(SubscribeOnEnemyDied);
             _scoreViewModel = new ScoreViewModel();
@@ -37,6 +42,16 @@ namespace GameComponents.Score
         {
             _currentScore += scorePointsPerKill * ((int)enemy.Type + 1);
             _scoreViewModel.UpdateScorePoints(_currentScore);
+        }
+
+        public void OnGameDispose()
+        {
+            _currentScore = 0;
+            _scoreViewModel.UpdateScorePoints(_currentScore);
+        }
+
+        public void OnGameEnded()
+        {
         }
     }
     

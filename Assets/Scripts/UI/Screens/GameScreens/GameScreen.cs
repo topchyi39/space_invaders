@@ -9,17 +9,19 @@ namespace UI.Screens
     {
         [SerializeField] private Button pauseButton;
         [SerializeField] private Button resumeButton;
+        [SerializeField] private Button toMenuButton;
         
         [SerializeField] private SubScreen inGameSubScreen;
         [SerializeField] private SubScreen pausedSubScreen;
         [SerializeField] private SubScreen gameResultSubScreen;
 
         private SubScreen _currentSubScreen;
-                
+        
         private void Awake()
         {
             pauseButton.onClick.AddListener(PauseGame);
             resumeButton.onClick.AddListener(ResumeGame);
+            toMenuButton.onClick.AddListener(ToMenu);
         }
 
         private void PauseGame()
@@ -32,6 +34,12 @@ namespace UI.Screens
         {
             ViewModel?.ResumeGame();
             SwapSubScreen(inGameSubScreen);
+        }
+
+        private void ToMenu()
+        {
+            ViewModel?.DisposeGame();
+            _uiManager.Show<MenuViewModel>();
         }
 
         private void SwapSubScreen(SubScreen subScreen)

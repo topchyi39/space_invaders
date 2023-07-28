@@ -31,6 +31,24 @@
                     "processors": "",
                     "interactions": "Hold(duration=0.2,pressPoint=0.2)",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Gyroscope",
+                    "type": "Value",
+                    "id": "768858ac-881c-42ad-8fdc-cd6d3f742b42",
+                    "expectedControlType": "Quaternion",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "MousePosition",
+                    "type": "Value",
+                    "id": "c29b75a3-7780-4337-b8c1-e5edbc8c2b83",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -119,6 +137,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "MovingTouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7456ec6e-0055-410e-abde-9250afe5638c",
+                    "path": "<TrackedDevice>/deviceRotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gyroscope",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0eb090c5-b887-4db1-b6b0-4998d15643d2",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MousePosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

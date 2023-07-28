@@ -30,6 +30,7 @@ namespace Settings
         
         private void Start()
         {
+            Application.targetFrameRate = 120;
             foreach (var module in _modules.Values)
             {
                 module.Init();

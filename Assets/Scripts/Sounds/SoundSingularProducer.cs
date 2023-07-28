@@ -3,11 +3,6 @@
     public abstract class SoundSingularProducer<TSoundData> : SoundPoolProducer<TSoundData> where TSoundData : class, ISoundData
     {
         private SoundEffect _soundEffect;
-        
-        private void Start()
-        {
-            _soundEffect = _soundEffectPool.Pool.Get();
-        }
 
         protected override SoundEffect GetSoundEffect()
         {

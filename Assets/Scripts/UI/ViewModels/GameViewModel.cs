@@ -27,6 +27,11 @@ namespace UI.ViewModels
             _game.ResumeGame();
         }
 
+        public void DisposeGame()
+        {
+            _game.DisposeGame();
+        }
+
         void IGameEndListener.OnGameEnded()
         {
             OnGameEnded?.Invoke();

@@ -53,6 +53,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Hold(duration=0.2,pressPoint=0.2)"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Gyroscope"",
+                    ""type"": ""Value"",
+                    ""id"": ""768858ac-881c-42ad-8fdc-cd6d3f742b42"",
+                    ""expectedControlType"": ""Quaternion"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""c29b75a3-7780-4337-b8c1-e5edbc8c2b83"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -143,6 +161,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""MovingTouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7456ec6e-0055-410e-abde-9250afe5638c"",
+                    ""path"": ""<TrackedDevice>/deviceRotation"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Gyroscope"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0eb090c5-b887-4db1-b6b0-4998d15643d2"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -154,6 +194,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Player_Moving = m_Player.FindAction("Moving", throwIfNotFound: true);
         m_Player_Fire = m_Player.FindAction("Fire", throwIfNotFound: true);
         m_Player_MovingTouch = m_Player.FindAction("MovingTouch", throwIfNotFound: true);
+        m_Player_Gyroscope = m_Player.FindAction("Gyroscope", throwIfNotFound: true);
+        m_Player_MousePosition = m_Player.FindAction("MousePosition", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -218,6 +260,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Moving;
     private readonly InputAction m_Player_Fire;
     private readonly InputAction m_Player_MovingTouch;
+    private readonly InputAction m_Player_Gyroscope;
+    private readonly InputAction m_Player_MousePosition;
     public struct PlayerActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -225,6 +269,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Moving => m_Wrapper.m_Player_Moving;
         public InputAction @Fire => m_Wrapper.m_Player_Fire;
         public InputAction @MovingTouch => m_Wrapper.m_Player_MovingTouch;
+        public InputAction @Gyroscope => m_Wrapper.m_Player_Gyroscope;
+        public InputAction @MousePosition => m_Wrapper.m_Player_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -243,6 +289,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MovingTouch.started += instance.OnMovingTouch;
             @MovingTouch.performed += instance.OnMovingTouch;
             @MovingTouch.canceled += instance.OnMovingTouch;
+            @Gyroscope.started += instance.OnGyroscope;
+            @Gyroscope.performed += instance.OnGyroscope;
+            @Gyroscope.canceled += instance.OnGyroscope;
+            @MousePosition.started += instance.OnMousePosition;
+            @MousePosition.performed += instance.OnMousePosition;
+            @MousePosition.canceled += instance.OnMousePosition;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -256,6 +308,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @MovingTouch.started -= instance.OnMovingTouch;
             @MovingTouch.performed -= instance.OnMovingTouch;
             @MovingTouch.canceled -= instance.OnMovingTouch;
+            @Gyroscope.started -= instance.OnGyroscope;
+            @Gyroscope.performed -= instance.OnGyroscope;
+            @Gyroscope.canceled -= instance.OnGyroscope;
+            @MousePosition.started -= instance.OnMousePosition;
+            @MousePosition.performed -= instance.OnMousePosition;
+            @MousePosition.canceled -= instance.OnMousePosition;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -278,5 +336,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnMoving(InputAction.CallbackContext context);
         void OnFire(InputAction.CallbackContext context);
         void OnMovingTouch(InputAction.CallbackContext context);
+        void OnGyroscope(InputAction.CallbackContext context);
+        void OnMousePosition(InputAction.CallbackContext context);
     }
 }

@@ -64,8 +64,7 @@ namespace Moving
             if(!IsHaveInput()) return;
             
             newPosition = _transform.position + GetVelocity();
-            
-            if(IsAtTheBorder(newPosition)) return;
+            if(!IsAtTheBorder(newPosition)) return;
             
             _transform.position = newPosition;
         }
@@ -74,7 +73,7 @@ namespace Moving
         {
             var rotation = Quaternion.identity;
             
-            if (IsHaveInput() && !IsAtTheBorder(position))
+            if (IsHaveInput() && IsAtTheBorder(position))
             {
                 rotation = GetRotation();
             }
@@ -89,14 +88,14 @@ namespace Moving
 
         private Quaternion GetRotation()
         {
-            var angle = rotationData.AngleRotation * Mathf.Sign(_playerInput.HorizontalAxis);
+            var angle = rotationData.AngleRotation * Mathf.Sign(-_playerInput.HorizontalAxis);
             return Quaternion.AngleAxis(angle,
                 Vector3.up);
         }
 
         private bool IsAtTheBorder(Vector3 newPosition)
         {
-            return _cameraBoundary.CheckPointInHorizontalBoundary(newPosition, _entityBoundary.HalfExtends.x);
+            return _cameraBoundary.CheckPointInBoundary(newPosition, _entityBoundary.HalfExtends.x, true);
         }
 
         private bool IsHaveInput()

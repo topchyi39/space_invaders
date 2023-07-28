@@ -124,7 +124,6 @@ MonoBehaviour:
   - rid: 3243305644760760331
   - rid: 3243305644760760332
   - rid: 3243305644760760333
-  - rid: 3243305647338684416
   - rid: 3243305647338684419
   - rid: 3243305668889280512
   KeepPlayModeChanges: 0
@@ -205,7 +204,7 @@ MonoBehaviour:
         Mode: 0
         AnimateScaleTarget: {fileID: 3942949263346258192}
         AnimateScaleDuration: 1
-        RemapCurveZero: 0.7
+        RemapCurveZero: 1
         RemapCurveOne: 0
         Offset: 0
         AnimateX: 1
@@ -1519,77 +1518,6 @@ MonoBehaviour:
           m_PropagationSpeed: 343
         Velocity: {x: 1, y: 1, z: 1}
         ClearImpulseOnStop: 0
-    - rid: 3243305647338684416
-      type: {class: VisualEffectFeedback, ns: Feedbacks, asm: Assembly-CSharp}
-      data:
-        Active: 1
-        UniqueID: 1834940732
-        Label: VFXPlayFeedback
-        ChannelMode: 0
-        Channel: 0
-        MMChannelDefinition: {fileID: 0}
-        Chance: 100
-        DisplayColor: {r: 0, g: 0, b: 0, a: 1}
-        Timing:
-          TimescaleMode: 0
-          ExcludeFromHoldingPauses: 0
-          ContributeToTotalDuration: 1
-          InitialDelay: 1
-          CooldownDuration: 0
-          InterruptsOnStop: 1
-          NumberOfRepeats: 0
-          RepeatForever: 0
-          DelayBetweenRepeats: 1
-          MMFeedbacksDirectionCondition: 0
-          PlayDirection: 0
-          ConstantIntensity: 0
-          UseIntensityInterval: 0
-          IntensityIntervalMin: 0
-          IntensityIntervalMax: 0
-          Sequence: {fileID: 0}
-          TrackID: 0
-          Quantized: 0
-          TargetBPM: 120
-        AutomatedTargetAcquisition:
-          Mode: 0
-          ChildIndex: 0
-        RandomizeOutput: 0
-        RandomMultiplier: {x: 0.8, y: 1}
-        RandomizeDuration: 0
-        RandomDurationMultiplier: {x: 0.5, y: 2}
-        UseRange: 0
-        RangeDistance: 5
-        UseRangeFalloff: 0
-        RangeFalloff:
-          serializedVersion: 2
-          m_Curve:
-          - serializedVersion: 3
-            time: 0
-            value: 1
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          - serializedVersion: 3
-            time: 1
-            value: 0
-            inSlope: 0
-            outSlope: 0
-            tangentMode: 0
-            weightedMode: 0
-            inWeight: 0
-            outWeight: 0
-          m_PreInfinity: 2
-          m_PostInfinity: 2
-          m_RotationOrder: 4
-        RemapRangeFalloff: {x: 0, y: 1}
-        Owner: {fileID: 26134889}
-        DebugActive: 0
-        target: {fileID: 3128371940289478768}
-        vfxType: VisualEffects.DestroyingEffect
-        vfxInstancer: {fileID: 9202483791399935846}
     - rid: 3243305647338684419
       type: {class: MMF_Flicker, ns: MoreMountains.Feedbacks, asm: MoreMountains.Feedbacks}
       data:
@@ -1658,7 +1586,7 @@ MonoBehaviour:
         RemapRangeFalloff: {x: 0, y: 1}
         Owner: {fileID: 26134889}
         DebugActive: 0
-        BoundRenderer: {fileID: 189409711208074900}
+        BoundRenderer: {fileID: 5562776085680850829}
         Mode: 0
         PropertyName: _Tint
         FlickerDuration: 0.2
@@ -1842,6 +1770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyFeedbacks: {fileID: 26134889}
+  visual: {fileID: 1616443240049715985}
 --- !u!114 &-6813750376537025059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1886,7 +1815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d09627a1022a4b6183aa21cb5049c9a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bound: {x: 3, y: 2, z: 0.3}
+  bound: {x: 3.2, y: 2.2, z: 0.3}
 --- !u!65 &1565244593430999988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1898,7 +1827,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.3, y: 1.4, z: 0.2}
+  m_Size: {x: 3.2, y: 2.2, z: 0.2}
   m_Center: {x: 0, y: -0.1, z: 0}
 --- !u!1 &4884951016907029177
 GameObject:
@@ -2101,7 +2030,7 @@ MonoBehaviour:
         AnimateScaleTarget: {fileID: 3942949263346258192}
         AnimateScaleDuration: 1
         RemapCurveZero: 0
-        RemapCurveOne: 0.7
+        RemapCurveOne: 1
         Offset: 0
         AnimateX: 1
         AnimateScaleTweenX:
@@ -3194,6 +3123,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3942949263346258192}
+  - component: {fileID: 1616443240049715985}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -3210,14 +3140,31 @@ Transform:
   m_GameObject: {fileID: 7467285047677328000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 2469719466402483558}
+  - {fileID: 8510543043211945258}
   m_Father: {fileID: 3128371940289478768}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7731859173359503199
+--- !u!114 &1616443240049715985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7467285047677328000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095a9828e6cb4fe9a48508436a54cbf7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  meshFilter: {fileID: 4020542030422133906}
+  meshRenderer: {fileID: 5562776085680850829}
+  changeBoundary: 1
+  collider: {fileID: 1565244593430999988}
+  boundary: {fileID: 4394311006418782865}
+--- !u!1 &8348178338516846225
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -3225,38 +3172,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2469719466402483558}
-  - component: {fileID: 189409711208074900}
-  - component: {fileID: 7701979443128827896}
+  - component: {fileID: 8510543043211945258}
+  - component: {fileID: 4020542030422133906}
+  - component: {fileID: 5562776085680850829}
   m_Layer: 0
-  m_Name: Invader
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2469719466402483558
+--- !u!4 &8510543043211945258
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7731859173359503199}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_GameObject: {fileID: 8348178338516846225}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4285715, y: 1.4285715, z: 1.4285715}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3942949263346258192}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &189409711208074900
+--- !u!33 &4020542030422133906
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8348178338516846225}
+  m_Mesh: {fileID: 0}
+--- !u!23 &5562776085680850829
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7731859173359503199}
+  m_GameObject: {fileID: 8348178338516846225}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -3270,7 +3225,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: dcba329ca3d36d04e94d4ad8dfe32efb, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3292,11 +3247,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &7701979443128827896
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7731859173359503199}
-  m_Mesh: {fileID: 4300000, guid: 9b1995cc383d75c45b0cf6618c969f29, type: 2}

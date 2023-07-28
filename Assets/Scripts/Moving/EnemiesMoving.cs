@@ -24,7 +24,9 @@ namespace Moving
         [SerializeField] private Transform origin;
         [SerializeField] private float maximumDelayBetweenMoving = 1f;
         [SerializeField] private float minimumDelayBetweenMoving = 0.02f;
-
+        [SerializeField] private float defaultSpeed = 0.2f;
+        [SerializeField] private float speedWhenOneEnemyLeft;
+        
         private CameraBoundary _cameraBoundary;
         private EnemiesContainer _enemiesContainer;
         private Enemy[] _aliveEnemies;
@@ -80,7 +82,7 @@ namespace Moving
 
         public void OnGameDispose()
         {
-            
+            StopAllCoroutines();
         }
 
         private IEnumerator MovingRoutine()
@@ -118,7 +120,7 @@ namespace Moving
             _job = new EnemiesMoveJob
             {
                 direction = direction,
-                speed = 0.2f,
+                speed = _enemiesContainer.CurrentEnemiesCount > 1 ? defaultSpeed : speedWhenOneEnemyLeft,
                 deltaTime = Time.deltaTime,
                 useDeltaTime = false,
                 startEnemiesPositions = currentPositions,
@@ -154,7 +156,7 @@ namespace Moving
         {
             foreach (var resultPosition in _job.resultPositions)
             {
-                var reachedToBorder = _cameraBoundary.CheckPointInHorizontalBoundary(resultPosition, 1);
+                var reachedToBorder = !_cameraBoundary.CheckPointInBoundary(resultPosition, 1);
                 if (reachedToBorder)
                 {
                     return true;

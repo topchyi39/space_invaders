@@ -1,8 +1,10 @@
-﻿using Combat.Projectiles;
+﻿using Buildings;
+using Combat.Projectiles;
 using Entities;
 using Entities.EnemyEntity;
 using Entities.PlayerEntity;
 using GameComponents;
+using UnityEngine;
 using Zenject;
 
 namespace Combat
@@ -44,6 +46,7 @@ namespace Combat
         public void OnGameDispose()
         {
             
+            Disable();
         }
 
         protected override void UpdateCallback()
@@ -53,20 +56,22 @@ namespace Combat
         
         private bool TryFire()
         {
-            if (!IsReadyToFire() || !Enabled) return false;
+            if (!Enabled) return false;
+
+            if (!IsReadyToFire()) return false;
             
-            //Fire();
+            Fire();
             return true;
         }
         
         protected override void ConfigureProjectile(Projectile projectile)
         {
-            projectile.UpdateTargets(typeof(Player));
+            projectile.UpdateTargets(typeof(Player), typeof(BuildingPart));
         }
 
         protected override void LaunchProjectile(Projectile projectile)
         {
-            _currentShootingEntity = _enemiesContainer.GetRandomEntity(_lastShootingEntity);
+            _currentShootingEntity = _enemiesContainer.GetRandomAliveEntity(_lastShootingEntity);
             projectile.Launch(_currentShootingEntity.MovingSystem.Position, Origin.Down, PROJECTILE_SPEED);
         }
     }

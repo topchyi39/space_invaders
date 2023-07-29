@@ -57,7 +57,7 @@ namespace Combat
         private bool TryFire()
         {
             if (!Enabled) return false;
-
+            if (_enemiesContainer.CurrentEnemiesCount <= 1) return false;
             if (!IsReadyToFire()) return false;
             
             Fire();

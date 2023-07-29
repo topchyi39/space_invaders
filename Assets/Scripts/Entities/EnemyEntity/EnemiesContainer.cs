@@ -60,7 +60,7 @@ namespace Entities.EnemyEntity
         {
             return lineIndex >= Height ? 
                                 null   : 
-                                _enemies.GetRange(lineIndex * Width, Width).ToArray();
+                                _enemies.GetRange(lineIndex * Width, Width).Where(enemy => enemy.IsAlive ).ToArray();
         }
 
         public void AddEnemySpawnedCallback(Action<Enemy> action)
@@ -85,7 +85,7 @@ namespace Entities.EnemyEntity
                 {
                     randomEntity = aliveEnemies[randomIndex];
                 } 
-                while (randomEntity != previousEntity);
+                while (randomEntity == previousEntity);
             }
 
             return randomEntity;
@@ -97,6 +97,18 @@ namespace Entities.EnemyEntity
             foreach (var enemy in _enemies)
             {
                 enemy.Hit(null);
+            }
+        }
+
+        
+        [ContextMenu("Left One Enemy")]
+        private void LeftOneEnemy()
+        {
+            var randomEnemy = GetRandomAliveEntity(null);
+            foreach (var enemy in _enemies)
+            {
+                if (enemy != randomEnemy)
+                    enemy.Hit(null);
             }
         }
         

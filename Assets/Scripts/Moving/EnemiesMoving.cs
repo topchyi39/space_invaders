@@ -37,7 +37,8 @@ namespace Moving
         private bool _isPaused;
         private bool _jobCreated;
         private bool _reachedToBorder;
-        private bool _moveHorizontal;// = true;
+        private bool _moveHorizontal = true;// = true;
+        private int _moveVerticalCount;
         private int _currentDirection;
         
         private JobHandle _jobHandle;
@@ -90,6 +91,18 @@ namespace Moving
             yield return new WaitUntil(() => _enemiesContainer.IsEnemiesSpawned);
             while (this)
             {
+                if (!_moveHorizontal)
+                {
+                    _moveVerticalCount++;
+
+                    if (_moveVerticalCount >= _enemiesContainer.Height + 1)
+                    {
+                        _moveVerticalCount = 0;
+                        _moveHorizontal = true;
+                        ChangeDirection();
+                    }
+                }
+                
                 MoveByLine(GetDirection(_moveHorizontal));
                 CompleteJob();
                 yield return new WaitForSeconds(GetDelay());
@@ -99,8 +112,6 @@ namespace Moving
 
                 if (_lineIndex >= _enemiesContainer.Height)
                 {
-                    if(!_moveHorizontal)
-                        ChangeDirection();
                     _lineIndex = 0;
                 }
             }
@@ -116,11 +127,11 @@ namespace Moving
         private void CreateAndRunJob(Vector3 direction)
         {
             var currentPositions = GetEnemiesPositions();
-            
+            var speed = _enemiesContainer.CurrentEnemiesCount > 1 ? defaultSpeed : speedWhenOneEnemyLeft;
             _job = new EnemiesMoveJob
             {
                 direction = direction,
-                speed = _enemiesContainer.CurrentEnemiesCount > 1 ? defaultSpeed : speedWhenOneEnemyLeft,
+                speed = speed,
                 deltaTime = Time.deltaTime,
                 useDeltaTime = false,
                 startEnemiesPositions = currentPositions,
@@ -140,6 +151,7 @@ namespace Moving
             if (IsEnemiesReachToBorder())
             {
                 _moveHorizontal = false;
+                _lineIndex = -1;
                 DisposeJob();
                 return;
             }
@@ -169,7 +181,6 @@ namespace Moving
         private void ChangeDirection()
         {
             _currentDirection++;
-            _moveHorizontal = true;
             var enumLength = Enum.GetNames(typeof(EnemyMoveDirection)).Length;
 
             if (_currentDirection >= enumLength)
@@ -222,6 +233,7 @@ namespace Moving
         private void UpdateEnemiesArrayByLine(int index)
         {
             _aliveEnemies = _enemiesContainer.GetEnemiesByLine(index);
+            Debug.LogError($"Line index: {index}; Alive in line - {_aliveEnemies.Length}");
         }
     }
 }

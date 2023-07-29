@@ -1,6 +1,7 @@
 using System;
 using Combat;
 using Combat.Projectiles;
+using Entities.EnemyEntity;
 using GameComponents;
 using MoreMountains.Feedbacks;
 using Moving;
@@ -49,6 +50,14 @@ namespace Entities.PlayerEntity
         {
             Die();
             return true;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.GetComponent<Enemy>())
+            {
+                Hit(null);
+            }
         }
 
         [ContextMenu("Die")]
